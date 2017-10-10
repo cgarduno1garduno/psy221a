@@ -1,5 +1,5 @@
 ### General Maintenance Functions
-The functions below clear the workspace, console, or both. 
+Cleaning up your workspace
 ```r
 # Clear workspace
 clearws = function() {
@@ -17,4 +17,13 @@ clear = function() {
   clearcons()
   clearws()
 }  
+```
+
+Setting up a working environment. Note that you can also setup a user R configuration startup file. 
+```r
+# Retrieve current working directory
+getwd()
+
+# Set new working directory
+setwd("~/Desktop/UCSB/fall2017/psych221a/lab")
 ```
