@@ -1,19 +1,18 @@
-The function below is used to clear/delete the global workspace.
+###General Maintenance Functions
+The functions below clear the workspace, console, or both. 
 ```r
+# Clear workspace
 clearws = function() {
   rm(list=ls(.GlobalEnv), envir=.GlobalEnv)
 }
-```
 
-This function clears the console. 
-```r
+# Clear console
 clearcons = function() {
   cat("\014")
 }
-```
 
-You can call functions within functions (as long as the nested functions have been defined, your new function will run) to make things neater. 
-```r
+# Clear workspace and console
+# *The previous two functions must be defined in order for this function to work*
 clear = function() {
   clearcons()
   clearws()
