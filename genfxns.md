@@ -1,4 +1,4 @@
-###General Maintenance Functions
+### General Maintenance Functions
 The functions below clear the workspace, console, or both. 
 ```r
 # Clear workspace
