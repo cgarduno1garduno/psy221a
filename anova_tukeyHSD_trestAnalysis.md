@@ -29,4 +29,12 @@ scores.aov = aov(scores ~ levs)
 summary(scores.aov)
 ```
 
+## Tukey Pairwise Comparisons
+Required Packages: `{agricolae}`
+
+We can compute the pairwise comparison easily using `HSD.test` from the `{agricolae}` package. The results can be shown by running `> test` in the console. 
+```r
+test = HSD.test(scores.aov, 'levs', alpha = 0.05, group = FALSE)
+```
+
 ## 
