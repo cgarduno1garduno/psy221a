@@ -54,11 +54,11 @@ test = HSD.test(scores.aov, 'levs', alpha = 0.05, group = FALSE)
 
 We start by organizing the data in a way that's easy to visualize. `x_groups` will be a vector containing each group's condition, which we will clean up during plotting. We then generate `dataset1` and `dataset2`, which contain the raw data and the group means, respectively. You can use any package to plot, but we'll stick with the built-in plotting functions. 
 ```r
-x_groups = rep(1:4, each = 6)
+x_groups = rep(c(0, 100, 200, 300), each = 6)
 dataset1 = data.frame(scores, x_groups)
 dataset2 = dataset1 %>% group_by(x_groups) %>% summarise(Avg = mean(scores))
 
-x_values = c(1.0, 2.0, 3.0, 4.0)
+x_values = c(0, 100, 200, 300)
 x_labels = c("0mg", "100mg", "200mg", "300mg")
 plot(dataset1$scores ~ dataset1$x_groups, 
      ylab = "Driving Errors", xlab = "Caffeine (mg)", 
@@ -67,8 +67,15 @@ axis(side = 1, at = x_values, labels = x_labels)
 axis(2)
 lines(dataset2$Avg ~ dataset2$x_groups)
 ```
-![](https://github.com/cgarduno1garduno/psy221a/blob/master/de_caffeine_plot1.png)
+![](https://github.com/cgarduno1garduno/psy221a/blob/master/de_caffeine_plot.png)
+
+From the graph above we can see that either function of degree 1 or 2 would likely fit this data. We can fit a line to in `deg1` and a quadratic in `deg2` and use the `summary()` function to look at the results. 
+```r
+deg1 = lm(scores ~ x_groups)
+deg2 = lm(scores ~ poly(x_groups, 2, raw = TRUE))
+```
+
+Running this, we get that the linear fit is significant at alpha set to ~0.0001, and that the quadratic fit is significant at alpha set to 0.1, so if our chosen alpha is 0.05, we see that the linear model best explains our data. 
 
 
-
-*Special thanks to @AntoniosK* for helping me understand and visualize the polynomial fitting in [this](https://stackoverflow.com/questions/47726688/quadratic-fitting-for-grouped-data-in-r) post. 
+*Thank you to @AntoniosK* at StackOverflow for helping me understand and visualize the polynomial fitting in [this](https://stackoverflow.com/questions/47726688/quadratic-fitting-for-grouped-data-in-r) post. 
