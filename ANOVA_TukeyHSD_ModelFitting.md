@@ -1,4 +1,4 @@
-# One-way ANOVA, Tukey Pairwise Comparisons, and Quadratic Trend Analysis
+# One-way ANOVA, Tukey Pairwise Comparisons, and Polynomial Fitting
 
 From *Explaining Psychological Statistics* (4th Ed, Cohen, Ch13, B16), we have the following data showing the number of driving errors that subjects made on a driving simulation video game given some amount of caffeine. 
            
@@ -50,6 +50,25 @@ test = HSD.test(scores.aov, 'levs', alpha = 0.05, group = FALSE)
 ```
 
 ## Quadratic Trend Analysis
+**Required Packages**: `{dplyr}`, `{magrittr}`
+
+We start by organizing the data in a way that's easy to visualize. `x_groups` will be a vector containing each group's condition, which we will clean up during plotting. We then generate `dataset1` and `dataset2`, which contain the raw data and the group means, respectively. You can use any package to plot, but we'll stick with the built-in plotting functions. 
+```r
+x_groups = rep(1:4, each = 6)
+dataset1 = data.frame(scores, x_groups)
+dataset2 = dataset1 %>% group_by(x_groups) %>% summarise(Avg = mean(scores))
+
+x_values = c(1.0, 2.0, 3.0, 4.0)
+x_labels = c("0mg", "100mg", "200mg", "300mg")
+plot(dataset1$scores ~ dataset1$x_groups, 
+     ylab = "Driving Errors", xlab = "Caffeine (mg)", 
+     main = "Driving Errors vs. Caffeine Consumption", axes = FALSE)
+axis(side = 1, at = x_values, labels = x_labels)
+axis(2)
+lines(dataset2$Avg ~ dataset2$x_groups)
+```
+![](https://github.com/cgarduno1garduno/psy221a/blob/master/de_caffeine_plot1.png)
 
 
 
+*Special thanks to @AntoniosK* for helping me understand and visualize the polynomial fitting in [this](https://stackoverflow.com/questions/47726688/quadratic-fitting-for-grouped-data-in-r) post. 
